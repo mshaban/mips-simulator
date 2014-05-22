@@ -20,7 +20,7 @@ public abstract class RFormat {
      * @param rt String
      * @param rd String
      *
-     * @author: Eslam Maged
+     * @author: EslaMaged
      */
     public RFormat( String rs, String rt, String rd) throws  InvalidArgumentException {
         if((!(rs.trim().charAt(0)!='$') )||(!(rt.trim().charAt(0)!='$')))
