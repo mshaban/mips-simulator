@@ -18,7 +18,6 @@ public abstract class IFormat {
             throw new InvalidArgumentException();
         if (constant > (1 << 15) - 1 || constant < -1 * (1 << 15))
             throw new OutOfRangeException();
-
         this.rs = rs;
         this.rt = rt;
         this.constant = constant;
