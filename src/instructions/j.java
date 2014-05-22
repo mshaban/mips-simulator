@@ -1,16 +1,15 @@
 package instructions;
 
-import formats.IFormat;
+import formats.JFormat;
 
 /**
  * Created by mohamed on 5/22/14.
  * package instructions
  * project mips-simulator
  */
-public class addi extends IFormat {
-
-    public addi(String rs, String rt, int constant) throws Exception {
-        super(rs, rt, constant);
+public class j extends JFormat {
+    public j(int address) throws Exception {
+        super(address);
     }
 
     @Override

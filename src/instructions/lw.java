@@ -7,9 +7,9 @@ import formats.IFormat;
  * package instructions
  * project mips-simulator
  */
-public class addi extends IFormat {
+public class lw extends IFormat {
 
-    public addi(String rs, String rt, int constant) throws Exception {
+    public lw(String rs, String rt, int constant) throws Exception {
         super(rs, rt, constant);
     }
 
