@@ -7,7 +7,7 @@ import exceptions.OutOfRangeException;
  * package formats
  * project mips-simulator
  */
-public class JFormat {
+public abstract class JFormat {
 
     int address;
 
@@ -16,4 +16,6 @@ public class JFormat {
             throw new OutOfRangeException();
         this.address = address;
     }
+
+    public abstract void execute();
 }
