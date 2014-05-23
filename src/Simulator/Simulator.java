@@ -48,7 +48,7 @@ public class Simulator {
     }
 
     public void run() {
-        displayWelcomeMsg();
+        gassanMattar();
         init();
         readInstructions();
         loadData();
@@ -82,7 +82,7 @@ public class Simulator {
 
     }
 
-    private void displayWelcomeMsg() {
+    private void gassanMattar() {
         System.out.println("Welcome to our MIPS Project!");
     }
 
@@ -90,5 +90,19 @@ public class Simulator {
     public static void main(String[] args) {
         Simulator sm = new Simulator();
         sm.run();
+    }
+
+    public void parser(String instruction) {
+        //  add s2, s0, s1
+        //instruction decode
+
+        String[] array = instruction.split(" ");
+        String operation = array[0].trim();
+
+        switch(operation){
+            case "add":  ;break;
+        }
+
+
     }
 }
