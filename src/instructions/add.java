@@ -8,10 +8,10 @@ import formats.RFormat;
 /**
  * Created by EslaMaged on 5/23/14.
  */
-public class add extends RFormat{
+public class add extends RFormat {
 
     public add(String rs, String rt, String rd) throws InvalidArgumentException {
-        super(rs,rt,rd);
+        super(rs, rt, rd);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class add extends RFormat{
         int r1 = Register.getRegister().readRegister(this.getRt());
         int r2 = Register.getRegister().readRegister(this.getRd());
         int result = ALU.executeInstruction("add", r1, r2);
-        this.setRs(""+result);
+        Register.getRegister().writeRegister(getRs(), result);
     }
 
 }
