@@ -16,8 +16,13 @@ public class Register {
 
     private HashMap<String, Integer> registers;
     private static final String readOnlyRegister = "$zero";
+    private static Register register = new Register();
 
-    public Register() {
+    public static void setRegister(Register register) {
+        Register.register = register;
+    }
+
+    private Register() {
         registers = new HashMap<String, Integer>();
         String line;
 
@@ -54,11 +59,16 @@ public class Register {
         registers.put(registerName, value);
     }
 
-    public int readRegister(String registerName, int value) throws Exception {
+    public int readRegister(String registerName) throws Exception {
         registerName = registerName.toLowerCase();
         if (!registers.containsKey(registerName)) {
             throw new InvalidRegisterNameException();
         }
         return registers.get(registerName);
     }
+
+    public static Register getRegister() {
+        return register;
+    }
+
 }
