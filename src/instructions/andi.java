@@ -5,13 +5,10 @@ import component.Register;
 import formats.IFormat;
 
 /**
- * Created by mohamed on 5/22/14.
- * package instructions
- * project mips-simulator
+ * Created by EslaMaged on 5/23/14.
  */
-public class ori extends IFormat {
-
-    public ori(String rs, String rt, int constant) throws Exception {
+public class andi extends IFormat {
+    public andi(String rs, String rt, int constant) throws Exception {
         super(rs, rt, constant);
     }
 
@@ -19,7 +16,7 @@ public class ori extends IFormat {
     public void execute() throws Exception {
         int v1 = Register.getRegister().readRegister(getRt());
         int v2 = getConstant();
-        int result = ALU.executeInstruction("or", v1, v2);
+        int result = ALU.executeInstruction("and", v1, v2);
         Register.getRegister().writeRegister(getRs(), result);
     }
 }

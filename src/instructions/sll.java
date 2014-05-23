@@ -1,5 +1,7 @@
 package instructions;
 
+import component.ALU;
+import component.Register;
 import exceptions.InvalidArgumentException;
 import formats.RFormat;
 
@@ -14,7 +16,11 @@ public class sll extends RFormat{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception{
+        int r1 = Register.getRegister().readRegister(this.getRt());
+        int shamt = Integer.parseInt(this.getRt());
+        int result = r1 << shamt;
+        this.setRs(""+result);
 
     }
 }
