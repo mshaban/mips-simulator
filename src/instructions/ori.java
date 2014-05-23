@@ -20,6 +20,6 @@ public class ori extends IFormat {
         int v1 = Register.getRegister().readRegister(getRt());
         int v2 = getConstant();
         int result = ALU.executeInstruction("or", v1, v2);
-        Register.getRegister().writeRegister(getRs(), (byte) result);
+        Register.getRegister().writeRegister(getRs(), result);
     }
 }

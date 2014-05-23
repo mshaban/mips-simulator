@@ -11,7 +11,7 @@ import exceptions.WrongIndiciesException;
 public class DataMemory {
 
 
-    private byte[] memory;
+    private int[] memory;
     private static DataMemory dataMemory = new DataMemory();
 
     /**
@@ -20,7 +20,7 @@ public class DataMemory {
      * @param memory
      * @author: EslaMaged
      */
-    public DataMemory(byte[] memory) {
+    public DataMemory(int[] memory) {
         this.memory = memory;
     }
 
@@ -30,26 +30,26 @@ public class DataMemory {
      * @author: EslaMaged
      */
     private DataMemory() {
-        memory = new byte[1 << 5];
+        memory = new int[1 << 5];
     }
 
     /**
-     * Gets the memory byte array
+     * Gets the memory int array
      *
-     * @return memory : Array of Bytes
+     * @return memory : Array of int
      * @author: EslaMaged
      */
-    public byte[] getMemory() {
+    public int[] getMemory() {
         return memory;
     }
 
     /**
-     * Sets the memory array of bytes to a given value
+     * Sets the memory array of int to a given value
      *
      * @param memory
      * @author: EslaMaged
      */
-    public void setMemory(byte[] memory) {
+    public void setMemory(int[] memory) {
         this.memory = memory;
     }
 
@@ -64,12 +64,12 @@ public class DataMemory {
     }
 
     /**
-     * @param value Array of Bytes
+     * @param value Array of int
      * @param index Integer
      * @throws MemoryOutOfBoundsException
      * @author: Eslam
      */
-    public void write(byte[] value, int index) throws MemoryOutOfBoundsException {
+    public void write(int[] value, int index) throws MemoryOutOfBoundsException {
         if (index < 0 || (value.length + index) > this.getSize()) {
             throw new MemoryOutOfBoundsException();
         }
@@ -83,20 +83,20 @@ public class DataMemory {
     /**
      * @param startIndex Integer
      * @param endIndex   Integer
-     * @return Array of Bytes
+     * @return Array of int
      * @throws WrongIndiciesException
      * @throws MemoryOutOfBoundsException
      * @author: EslaMaged
      */
 
-    public byte[] read(int startIndex, int endIndex) throws WrongIndiciesException, MemoryOutOfBoundsException {
+    public int[] read(int startIndex, int endIndex) throws WrongIndiciesException, MemoryOutOfBoundsException {
         if (startIndex < endIndex) {
             throw new WrongIndiciesException();
         } else if (startIndex < 0 || endIndex > this.getSize()) {
             throw new MemoryOutOfBoundsException();
         }
 
-        byte[] result = new byte[endIndex - startIndex];
+        int[] result = new int[endIndex - startIndex];
 
         for (int i = 0; i < result.length; i++) {
             result[i] = memory[startIndex + i];

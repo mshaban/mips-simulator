@@ -21,6 +21,6 @@ public class addi extends IFormat {
         int v2 = getConstant();
         int sum = ALU.executeInstruction("add", v1, v2);
 
-        Register.getRegister().writeRegister(getRs(), (byte) sum);
+        Register.getRegister().writeRegister(getRs(), sum);
     }
 }

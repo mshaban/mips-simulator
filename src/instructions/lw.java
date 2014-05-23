@@ -19,7 +19,6 @@ public class lw extends IFormat {
 
     @Override
     public void execute() {
-//        DataMemory.getDataMemory().write();
 
     }
 }
