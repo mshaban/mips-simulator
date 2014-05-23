@@ -13,8 +13,13 @@ public class lw extends IFormat {
         super(rs, rt, constant);
     }
 
+    public lw(String rs, String rt) throws Exception {
+        super(rs, rt);
+    }
+
     @Override
     public void execute() {
+//        DataMemory.getDataMemory().write();
 
     }
 }

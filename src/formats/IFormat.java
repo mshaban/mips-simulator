@@ -11,7 +11,6 @@ import exceptions.OutOfRangeException;
 public abstract class IFormat {
 
     private String rs, rt;
-
     private int constant;
 
     public IFormat(String rs, String rt, int constant) throws Exception {
@@ -22,6 +21,14 @@ public abstract class IFormat {
         this.rs = rs;
         this.rt = rt;
         this.constant = constant;
+    }
+
+    public IFormat(String rs, String rt) throws Exception {
+        if (!rs.startsWith("$"))
+            throw new InvalidArgumentException();
+        this.rs = rs;
+        this.rt = rt;
+        this.constant = 0;
     }
 
     public String getRs() {

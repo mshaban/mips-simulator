@@ -24,4 +24,3 @@ public class sub extends RFormat{
         this.setRs(""+result);
     }
 }
-

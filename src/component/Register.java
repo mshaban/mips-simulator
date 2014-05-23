@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Register {
 
-    private HashMap<String, Integer> registers;
+    private HashMap<String, Byte> registers;
     private static final String readOnlyRegister = "$zero";
     private static Register register = new Register();
 
@@ -23,23 +23,23 @@ public class Register {
     }
 
     private Register() {
-        registers = new HashMap<String, Integer>();
+        registers = new HashMap<String, Byte>();
         String line;
 
         try {
             BufferedReader bf = new BufferedReader(new FileReader("registers.in"));
             while ((line = bf.readLine()) != null)
-                registers.put(line, 0);
+                registers.put(line, (byte) 0);
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
     }
 
-    public HashMap<String, Integer> getRegisters() {
+    public HashMap<String, Byte> getRegisters() {
         return registers;
     }
 
-    public void setRegisters(HashMap<String, Integer> registers) {
+    public void setRegisters(HashMap<String, Byte> registers) {
         this.registers = registers;
     }
 
@@ -48,7 +48,7 @@ public class Register {
      * @param value
      * @throws Exception
      */
-    public void writeRegister(String registerName, int value) throws Exception {
+    public void writeRegister(String registerName, Byte value) throws Exception {
         registerName = registerName.toLowerCase();
         if (registerName.equals(readOnlyRegister)) {
             throw new CannotWriteException();
