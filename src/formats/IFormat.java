@@ -10,8 +10,9 @@ import exceptions.OutOfRangeException;
  */
 public abstract class IFormat {
 
-    String rs, rt;
-    int constant;
+    private String rs, rt;
+
+    private int constant;
 
     public IFormat(String rs, String rt, int constant) throws Exception {
         if (!rs.startsWith("$") || !rt.startsWith("$"))
@@ -23,6 +24,31 @@ public abstract class IFormat {
         this.constant = constant;
     }
 
-    public abstract void execute();
+    public String getRs() {
+        return rs;
+    }
+
+    public void setRs(String rs) {
+        this.rs = rs;
+    }
+
+    public String getRt() {
+        return rt;
+    }
+
+    public void setRt(String rt) {
+        this.rt = rt;
+    }
+
+    public int getConstant() {
+        return constant;
+    }
+
+    public void setConstant(int constant) {
+        this.constant = constant;
+    }
+
+    public abstract void execute() throws Exception;
+
 }
 

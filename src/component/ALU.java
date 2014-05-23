@@ -9,22 +9,22 @@ import exceptions.invalidOperationException;
  */
 public class ALU {
 
-    public static int executeInstruction(String op, int rs, int rt) throws Exception {
+    public static int executeInstruction(String op, int v1, int v2) throws Exception {
 
         op = op.toLowerCase();
         switch (op) {
             case "add":
-                return rs + rt;
+                return v1 + v2;
             case "sub":
-                return rs - rt;
+                return v1 - v2;
             case "and":
-                return rs & rt;
+                return v1 & v2;
             case "or":
-                return rs | rt;
+                return v1 | v2;
             case "nor":
-                return ~(rs | rt);
+                return ~(v1 | v2);
             case "slt":
-                return rs < rt ? 1 : 0;
+                return v1 < v2 ? 1 : 0;
             default:
                 throw new invalidOperationException();
         }
