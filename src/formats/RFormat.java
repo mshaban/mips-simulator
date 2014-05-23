@@ -11,6 +11,23 @@ import exceptions.OutOfRangeException;
 public abstract class RFormat {
 
     private String rs;
+
+    public String getRt() {
+        return rt;
+    }
+
+    public void setRt(String rt) {
+        this.rt = rt;
+    }
+
+    public String getRd() {
+        return rd;
+    }
+
+    public void setRd(String rd) {
+        this.rd = rd;
+    }
+
     private String rt;
     private String rd;
 
@@ -30,6 +47,13 @@ public abstract class RFormat {
         this.rd = rd;
     }
 
-    public abstract void execute();
+    public abstract void execute() throws Exception;
 
+    public String getRs() {
+        return rs;
+    }
+
+    public void setRs(String rs) {
+        this.rs = rs;
+    }
 }
