@@ -23,7 +23,7 @@ public abstract class RFormat {
      * @author: EslaMaged
      */
     public RFormat( String rs, String rt, String rd) throws  InvalidArgumentException {
-        if((!(rs.trim().charAt(0)!='$') )||(!(rt.trim().charAt(0)!='$')))
+        if(((rs.trim().charAt(0) != '$') )||((rt.trim().charAt(0) != '$')))
             throw new InvalidArgumentException();
         this.rs = rs;
         this.rt = rt;
