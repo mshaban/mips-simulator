@@ -1,5 +1,7 @@
 package instructions;
 
+import component.DataMemory;
+import component.Register;
 import formats.IFormat;
 
 /**
@@ -18,7 +20,12 @@ public class lw extends IFormat {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception {
+        int offset = Integer.parseInt(getRt().split("\\(")[0]);
+        int core = Integer.parseInt(getRt().substring(getRt().indexOf('('), getRt().indexOf(')')));
+        core *= 4;
+        int value = DataMemory.getDataMemory().read(offset + core, offset + core)[0];
+        Register.getRegister().writeRegister(getRs(), value);
 
     }
 }

@@ -1,5 +1,7 @@
 package instructions;
 
+import component.DataMemory;
+import component.Register;
 import formats.IFormat;
 
 /**
@@ -8,13 +10,19 @@ import formats.IFormat;
  * project mips-simulator
  */
 public class sw extends IFormat {
-    
+
     public sw(String rs, String rt, int constant) throws Exception {
         super(rs, rt, constant);
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception {
+        int offset = Integer.parseInt(getRt().split("\\(")[0]);
+        int core = Integer.parseInt(getRt().substring(getRt().indexOf('('), getRt().indexOf(')')));
+        core *= 4;
+
+        int[] dataArray = {Register.getRegister().readRegister(getRs())};
+        DataMemory.getDataMemory().write(dataArray, core + offset);
 
     }
 }
