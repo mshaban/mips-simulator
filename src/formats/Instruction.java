@@ -7,5 +7,5 @@ package formats;
  */
 public abstract class Instruction {
 
-    public abstract void execute();
+    public abstract void execute() throws Exception;
 }
