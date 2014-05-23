@@ -80,6 +80,17 @@ public class Memory {
         }
     }
 
+    /**
+     *
+     * @param startIndex Integer
+     * @param endIndex Integer
+     * @return Array of Bytes
+     * @throws WrongIndiciesException
+     * @throws MemoryOutOfBoundsException
+     *
+     * @author: EslaMaged
+     */
+
     public byte[] read(int startIndex, int endIndex) throws WrongIndiciesException, MemoryOutOfBoundsException {
         if(startIndex < endIndex) {
             throw new WrongIndiciesException();
