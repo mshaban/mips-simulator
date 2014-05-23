@@ -8,7 +8,7 @@ import exceptions.OutOfRangeException;
  * package formats
  * project mips-simulator
  */
-public abstract class IFormat {
+public abstract class IFormat extends Instruction {
 
     private String rs, rt;
     private int constant;

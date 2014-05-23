@@ -8,7 +8,7 @@ import exceptions.OutOfRangeException;
  * package formats
  * project mips-simulator
  */
-public abstract class RFormat {
+public abstract class RFormat extends Instruction {
 
     private String rs;
 
@@ -33,14 +33,14 @@ public abstract class RFormat {
 
     /**
      * Constructor
+     *
      * @param rs String
      * @param rt String
      * @param rd String
-     *
      * @author: EslaMaged
      */
-    public RFormat( String rs, String rt, String rd) throws  InvalidArgumentException {
-        if(((rs.trim().charAt(0) != '$') )||((rt.trim().charAt(0) != '$')))
+    public RFormat(String rs, String rt, String rd) throws InvalidArgumentException {
+        if (((rs.trim().charAt(0) != '$')) || ((rt.trim().charAt(0) != '$')))
             throw new InvalidArgumentException();
         this.rs = rs;
         this.rt = rt;
