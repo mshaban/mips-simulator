@@ -75,7 +75,7 @@ public class Simulator {
     private void init() {
         this.pc = 0;
         this.currentInstruction = "";
-        instructionSet = new ArrayList<String>();
+        instructionSet = new ArrayList<>();
 
         dataMemory = new DataMemory();
 

@@ -29,7 +29,7 @@ public class DataMemory {
      *
      * @author: EslaMaged
      */
-    private DataMemory() {
+    public DataMemory() {
         memory = new int[1 << 5];
     }
 
