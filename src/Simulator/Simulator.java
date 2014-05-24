@@ -117,48 +117,47 @@ public class Simulator {
                 break;
 
             case "andi":
-                instruction = new andi(rs,rt,Integer.parseInt(array[3].trim()));
+                instruction = new andi(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
 
             case "lw":
-                instruction = new lw(rs,rt,0);
+                instruction = new lw(rs, rt, 0);
                 break;
 
-            case"nor":
-                instruction = new nor(rs,rt,array[3].trim());
+            case "nor":
+                instruction = new nor(rs, rt, array[3].trim());
                 break;
 
-            case"or":
-                instruction = new or(rs,rt,array[3].trim());
+            case "or":
+                instruction = new or(rs, rt, array[3].trim());
                 break;
 
-            case"ori":
-                instruction = new ori(rs,rt,Integer.parseInt(array[3].trim()));
+            case "ori":
+                instruction = new ori(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
 
-            case"sll":
-                instruction = new sll(rs,rt, array[3].trim());
+            case "sll":
+                instruction = new sll(rs, rt, array[3].trim());
                 break;
 
-            case"slt":
-                instruction = new slt(rs,rt,array[3].trim());
+            case "slt":
+                instruction = new slt(rs, rt, array[3].trim());
                 break;
 
-            case"srl":
-                instruction = new srl(rs,rt,array[3].trim());
+            case "srl":
+                instruction = new srl(rs, rt, array[3].trim());
                 break;
 
-            case"sub":
-                instruction = new sub(rs,rt,array[3].trim());
+            case "sub":
+                instruction = new sub(rs, rt, array[3].trim());
                 break;
 
-            case"sw":
-                instruction = new sw(rs,rt,0);
+            case "sw":
+                instruction = new sw(rs, rt, 0);
                 break;
         }
 
         instruction.execute();
-
 
 
     }
