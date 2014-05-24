@@ -6,8 +6,9 @@ package exceptions;
  * project mips-simulator
  */
 public class InvalidOperationException extends Exception {
-    @Override
-    public String getMessage() {
-        return "invalid operation";
+
+    public InvalidOperationException() {
+        super("This operation is invalid.");
     }
+
 }
