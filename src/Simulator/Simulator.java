@@ -75,7 +75,6 @@ public class Simulator {
             rs = array[1].trim().substring(0, array[1].length() - 1);
             rt = array[2].trim().substring(0, array[2].length() - 1);
         }
-
         switch (operation) {
             case "add":
                 instruction = new add(rs, rt, array[3].trim());
