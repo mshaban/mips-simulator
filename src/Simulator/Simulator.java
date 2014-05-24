@@ -100,8 +100,8 @@ public class Simulator {
         Instruction instruction = null;
         String[] array = s.split(" ");
         String operation = array[0].trim();
-        String rs = array[1].trim().substring(array[1].length() - 1);
-        String rt = array[2].trim().substring(array[2].length() - 1);
+        String rs = array[1].trim().substring(0,array[1].length() - 1);
+        String rt = array[2].trim().substring(0,array[2].length() - 1);
         switch (operation) {
             case "add":
                 instruction = new add(rs, rt, array[3].trim());
