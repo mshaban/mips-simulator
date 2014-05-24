@@ -6,6 +6,7 @@ import exceptions.InvalidRegisterNameException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mohamed on 5/23/14.
@@ -24,8 +25,11 @@ public class Register {
 
     private Register() {
         registers = new HashMap<>();
-        String line;
+        readFile();
+    }
 
+    private void readFile() {
+        String line;
         try {
             BufferedReader bf = new BufferedReader(new FileReader("registers.in"));
             while ((line = bf.readLine()) != null)
@@ -67,8 +71,20 @@ public class Register {
         return registers.get(registerName);
     }
 
+    public static void printRegisters() {
+        Register reg = Register.getRegister();
+
+        for (Map.Entry<String, Integer> ent : reg.getRegisters().entrySet())
+            System.out.println(ent.getKey() + "=>" + ent.getValue());
+    }
+
     public static Register getRegister() {
         return register;
+    }
+
+    public void reset() {
+        registers = new HashMap<>();
+        readFile();
     }
 
 }

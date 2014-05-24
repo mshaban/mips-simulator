@@ -1,165 +1,157 @@
-package Simulator;
+package simulator;
 
 import component.DataMemory;
+import component.InstructionMemory;
+import component.Label;
 import component.Register;
+import exceptions.InvalidOperationException;
 import formats.Instruction;
 import instructions.*;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 /**
  * Created by EslaMaged on 5/23/14.
+ * package simulator
+ * project mips-simulator
  */
 public class Simulator {
-    private ArrayList<String> instructionSet;
-    private DataMemory dataMemory;
-
     private int pc;
-    private String currentInstruction;
 
-    public ArrayList<String> getInstructionSet() {
-        return instructionSet;
-    }
-
-    public void setInstructionSet(ArrayList<String> instructionSet) {
-        this.instructionSet = instructionSet;
-    }
-
-    public DataMemory getDataMemory() {
-        return dataMemory;
-    }
-
-    public void setDataMemory(DataMemory dataMemory) {
-        this.dataMemory = dataMemory;
-    }
-
-    public int getPc() {
-        return pc;
-    }
-
-    public void setPc(int pc) {
-        this.pc = pc;
-    }
-
-    public String getCurrentInstruction() {
-        return currentInstruction;
-    }
-
-    public void setCurrentInstruction(String currentInstruction) {
-        this.currentInstruction = currentInstruction;
-    }
-
-    public void run() {
+    public Simulator() {
         gassanMattar();
-        init();
-        readInstructions();
-        loadData();
-    }
-
-    private void loadData() {
-
     }
 
     private void readInstructions() {
-
-
-        String instruction = "add s2, s0, s1";
-        instructionSet.add(instruction);
-        instruction = "lw s2, 4(s2)";
-        instructionSet.add(instruction);
-        instruction = "sub s2, s2, s0";
-        instructionSet.add(instruction);
-        instruction = "addi s2, s2, 1";
-        instructionSet.add(instruction);
-
+        BufferedReader bf;
+        try {
+            bf = new BufferedReader(new FileReader("sample1.in"));
+            String line;
+            int counter = 0;
+            while ((line = bf.readLine()) != null) {
+                if (line.trim().endsWith(":")) {
+                    Label.getLabelInstance().addLabel(line.substring(0, line.length() - 1), counter);
+                } else
+                    InstructionMemory.getInstructionSet().addInstruction(line);
+                counter++;
+            }
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void init() {
-        this.pc = 0;
-        this.currentInstruction = "";
-        instructionSet = new ArrayList<>();
+    public void resetSimulator() {
+        pc = 0;
+        InstructionMemory.getInstructionSet().reset();
+        DataMemory.getDataMemory().reset();
+        Register.getRegister().reset();
+    }
 
-        dataMemory = new DataMemory();
-
-
+    public void run() {
+        resetSimulator();
+        readInstructions();
     }
 
     private void gassanMattar() {
         System.out.println("Welcome to our MIPS Project!");
     }
 
-
-    public static void main(String[] args) {
-        Simulator sm = new Simulator();
-        sm.run();
+    public void fetchNextInstruction() throws Exception {
+        parser();
+        pc++;
     }
 
-    public void parser(String s) throws Exception {
-        //  add s2, s0, s1
+    public void parser() throws Exception {
         //instruction decode
-        Instruction instruction = null;
+        System.out.println(pc);
+        String s = InstructionMemory.getInstructionSet().getInsruction(pc);
+        Instruction instruction;
         String[] array = s.split(" ");
         String operation = array[0].trim();
-        String rs = array[1].trim().substring(array[1].length() - 1);
-        String rt = array[2].trim().substring(array[2].length() - 1);
+        String rs = "";
+        String rt = "";
+        if (array.length > 2) {
+            rs = array[1].trim().substring(0, array[1].length() - 1);
+            rt = array[2].trim().substring(0, array[2].length() - 1);
+        }
+
         switch (operation) {
             case "add":
                 instruction = new add(rs, rt, array[3].trim());
                 break;
-
-
             case "addi":
                 instruction = new addi(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
-
             case "and":
                 instruction = new and(rs, rt, array[3].trim());
                 break;
-
             case "andi":
-                instruction = new andi(rs,rt,Integer.parseInt(array[3].trim()));
+                instruction = new andi(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
-
             case "lw":
-                instruction = new lw(rs,rt,0);
+                instruction = new lw(rs, rt, 0);
                 break;
+            case "nor":
+                instruction = new nor(rs, rt, array[3].trim());
+                break;
+            case "or":
+                instruction = new or(rs, rt, array[3].trim());
+                break;
+            case "ori":
+                instruction = new ori(rs, rt, Integer.parseInt(array[3].trim()));
+                break;
+            case "sll":
+                instruction = new sll(rs, rt, array[3].trim());
+                break;
+            case "slt":
+                instruction = new slt(rs, rt, array[3].trim());
+                break;
+            case "srl":
+                instruction = new srl(rs, rt, array[3].trim());
+                break;
+            case "sub":
+                instruction = new sub(rs, rt, array[3].trim());
+                break;
+            case "sw":
+                instruction = new sw(rs, rt, 0);
+                break;
+            case "beq":
 
-            case"nor":
-                instruction = new nor(rs,rt,array[3].trim());
+                instruction = new beq(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
-
-            case"or":
-                instruction = new or(rs,rt,array[3].trim());
+            case "bne":
+                instruction = new bne(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
-
-            case"ori":
-                instruction = new ori(rs,rt,Integer.parseInt(array[3].trim()));
+            case "j":
+                instruction = new j(s.split(" ")[1]);
                 break;
-
-            case"sll":
-                instruction = new sll(rs,rt, array[3].trim());
+            case "jal":
+                instruction = new jal(s.split(" ")[1]);
                 break;
-
-            case"slt":
-                instruction = new slt(rs,rt,array[3].trim());
+            case "jr":
+                instruction = new jr(s.split(" ")[1]);
                 break;
-
-            case"srl":
-                instruction = new srl(rs,rt,array[3].trim());
-                break;
-
-            case"sub":
-                instruction = new sub(rs,rt,array[3].trim());
-                break;
-
-            case"sw":
-                instruction = new sw(rs,rt,0);
-                break;
+            default:
+                throw new InvalidOperationException();
         }
-
         instruction.execute();
+    }
 
-
-
+    public static void main(String[] args) throws Exception {
+        Simulator sm = new Simulator();
+        sm.run();
+        Register.getRegister().writeRegister("$s0", 2);
+        Register.getRegister().writeRegister("$s1", 2);
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        sm.fetchNextInstruction();
+        Register.getRegister().printRegisters();
     }
 }

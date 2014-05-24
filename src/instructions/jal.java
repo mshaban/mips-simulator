@@ -8,9 +8,10 @@ import formats.JFormat;
  * project mips-simulator
  */
 public class jal extends JFormat {
-    
-    public jal(int address) throws Exception {
-        super(address);
+
+
+    public jal(String label) throws Exception {
+        super(label);
     }
 
     @Override

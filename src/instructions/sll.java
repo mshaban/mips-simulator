@@ -11,14 +11,13 @@ import formats.RFormat;
 public class sll extends RFormat {
 
     public sll(String rs, String rt, String rd) throws InvalidArgumentException {
-
         super(rs, rt, rd);
     }
 
     @Override
     public void execute() throws Exception {
         int r1 = Register.getRegister().readRegister(this.getRt());
-        int shamt = Integer.parseInt(this.getRt());
+        int shamt = Integer.parseInt(this.getRd());
         int result = r1 << shamt;
         Register.getRegister().writeRegister(getRs(), result);
     }

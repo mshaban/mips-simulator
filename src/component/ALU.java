@@ -1,6 +1,6 @@
 package component;
 
-import exceptions.invalidOperationException;
+import exceptions.InvalidOperationException;
 
 /**
  * Created by mohamed on 5/23/14.
@@ -26,7 +26,7 @@ public class ALU {
             case "slt":
                 return v1 < v2 ? 1 : 0;
             default:
-                throw new invalidOperationException();
+                throw new InvalidOperationException();
         }
     }
 }

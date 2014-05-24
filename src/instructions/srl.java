@@ -17,7 +17,7 @@ public class srl extends RFormat {
     @Override
     public void execute() throws Exception {
         int r1 = Register.getRegister().readRegister(this.getRt());
-        int shamt = Integer.parseInt(this.getRt());
+        int shamt = Integer.parseInt(this.getRd());
         int result = r1 >> shamt;
         Register.getRegister().writeRegister(getRs(), result);
 

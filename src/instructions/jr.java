@@ -9,8 +9,9 @@ import formats.JFormat;
  */
 public class jr extends JFormat {
 
-    public jr(int address) throws Exception {
-        super(address);
+
+    public jr(String label) throws Exception {
+        super(label);
     }
 
     @Override

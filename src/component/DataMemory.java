@@ -1,9 +1,9 @@
 package component;
 
-import java.util.Arrays;
-
 import exceptions.MemoryOutOfBoundsException;
 import exceptions.WrongIndiciesException;
+
+import java.util.Arrays;
 
 /**
  * Created by EslaMaged on 5/23/14.
@@ -116,4 +116,12 @@ public class DataMemory {
         return dataMemory;
     }
 
+    public void reset() {
+        memory = new int[1 << 5];
+    }
+
+    public void printDataMemory() {
+        for (int i = 0; i < memory.length; i++)
+            System.out.println(i + "=>" + memory[i]);
+    }
 }

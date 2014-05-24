@@ -1,7 +1,5 @@
 package formats;
 
-import exceptions.OutOfRangeException;
-
 /**
  * Created by mohamed on 5/22/14.
  * package formats
@@ -9,12 +7,10 @@ import exceptions.OutOfRangeException;
  */
 public abstract class JFormat extends Instruction {
 
-    int address;
+    String label;
 
-    public JFormat(int address) throws Exception {
-        if (address > (1 << 26))
-            throw new OutOfRangeException();
-        this.address = address;
+    public JFormat(String label) throws Exception {
+        this.label = label;
     }
 
     public abstract void execute();
