@@ -2,6 +2,11 @@ package Simulator;
 
 import component.DataMemory;
 import component.Register;
+import formats.Instruction;
+import instructions.add;
+import instructions.addi;
+import instructions.and;
+import instructions.andi;
 
 import java.util.ArrayList;
 
@@ -61,13 +66,13 @@ public class Simulator {
     private void readInstructions() {
 
 
-		String instruction = "add s2, s0, s1";
+        String instruction = "add s2, s0, s1";
         instructionSet.add(instruction);
-		instruction = "lw s2, 4(s2)";
+        instruction = "lw s2, 4(s2)";
         instructionSet.add(instruction);
-		instruction = "sub s2, s2, s0";
+        instruction = "sub s2, s2, s0";
         instructionSet.add(instruction);
-		instruction = "addi s2, s2, 1";
+        instruction = "addi s2, s2, 1";
         instructionSet.add(instruction);
 
     }
@@ -92,15 +97,33 @@ public class Simulator {
         sm.run();
     }
 
-    public void parser(String instruction) {
+    public void parser(String s) throws Exception {
         //  add s2, s0, s1
         //instruction decode
-
-        String[] array = instruction.split(" ");
+        Instruction instruction;
+        String[] array = s.split(" ");
         String operation = array[0].trim();
+        String rs = array[1].trim().substring(array[1].length() - 1);
+        String rt = array[2].trim().substring(array[2].length() - 1);
+        switch (operation) {
+            case "add":
+                instruction = new add(rs, rt, array[3].trim());
+                break;
 
-        switch(operation){
-            case "add":  ;break;
+
+            case "addi":
+                instruction = new addi(rs, rt, Integer.parseInt(array[3].trim()));
+                break;
+
+            case "and":
+                instruction = new and(rs, rt, array[3].trim());
+                break;
+
+            case "andi":
+                instruction = new andi(rs,rt,Integer.parseInt(array[3].trim()));
+                break;
+
+
         }
 
 
