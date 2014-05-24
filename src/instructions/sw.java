@@ -15,6 +15,10 @@ public class sw extends IFormat {
         super(rs, rt, constant);
     }
 
+    public sw(String rs, String rt) throws Exception {
+        super(rs, rt);
+    }
+
     @Override
     public void execute() throws Exception {
         int offset = Integer.parseInt(getRt().split("\\(")[0]);

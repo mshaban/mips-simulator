@@ -97,7 +97,7 @@ public class Simulator {
     public void parser(String s) throws Exception {
         //  add s2, s0, s1
         //instruction decode
-        Instruction instruction;
+        Instruction instruction = null;
         String[] array = s.split(" ");
         String operation = array[0].trim();
         String rs = array[1].trim().substring(array[1].length() - 1);
@@ -121,7 +121,7 @@ public class Simulator {
                 break;
 
             case "lw":
-                instruction = new lw(rs,rt);
+                instruction = new lw(rs,rt,0);
                 break;
 
             case"nor":
@@ -133,7 +133,7 @@ public class Simulator {
                 break;
 
             case"ori":
-                instruction = new ori(rs,rt,Integer.parseInt(array[3].trim());
+                instruction = new ori(rs,rt,Integer.parseInt(array[3].trim()));
                 break;
 
             case"sll":
@@ -156,6 +156,9 @@ public class Simulator {
                 instruction = new sw(rs,rt,0);
                 break;
         }
+
+        instruction.execute();
+
 
 
     }
