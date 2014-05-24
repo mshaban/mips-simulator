@@ -17,10 +17,20 @@ import java.io.FileReader;
  * project mips-simulator
  */
 public class Simulator {
-    private int pc;
 
-    public Simulator() {
+    private int pc;
+    private static Simulator simulator = new Simulator();
+
+    private Simulator() {
         gassanMattar();
+    }
+
+    public static Simulator getSimulator() {
+        return simulator;
+    }
+
+    public int getPc() {
+        return pc;
     }
 
     private void readInstructions() {
@@ -32,11 +42,12 @@ public class Simulator {
             while ((line = bf.readLine()) != null) {
                 if (line.trim().endsWith(":")) {
                     Label.getLabelInstance().addLabel(line.substring(0, line.length() - 1), counter);
-                } else
+                } else {
                     InstructionMemory.getInstructionSet().addInstruction(line);
-                counter++;
+                    counter++;
+                }
             }
-        } catch (java.io.IOException e) {
+        } catch (java.io.IOException | InvalidOperationException e) {
             e.printStackTrace();
         }
     }
@@ -57,14 +68,14 @@ public class Simulator {
         System.out.println("Welcome to our MIPS Project!");
     }
 
-    public void fetchNextInstruction() throws Exception {
-        parser();
-        pc++;
+    public void instructionFetch() throws Exception {
+        int old = pc;
+        instructionDecode();
+        pc += old == pc ? 1 : 0;
     }
 
-    public void parser() throws Exception {
+    public void instructionDecode() throws Exception {
         //instruction decode
-        System.out.println(pc);
         String s = InstructionMemory.getInstructionSet().getInsruction(pc);
         Instruction instruction;
         String[] array = s.split(" ");
@@ -116,11 +127,10 @@ public class Simulator {
                 instruction = new sw(rs, rt, 0);
                 break;
             case "beq":
-
-                instruction = new beq(rs, rt, Integer.parseInt(array[3].trim()));
+                instruction = new beq(rs, rt, array[3].trim());
                 break;
             case "bne":
-                instruction = new bne(rs, rt, Integer.parseInt(array[3].trim()));
+                instruction = new bne(rs, rt, array[3].trim());
                 break;
             case "j":
                 instruction = new j(s.split(" ")[1]);
@@ -134,23 +144,27 @@ public class Simulator {
             default:
                 throw new InvalidOperationException();
         }
+        instructionExecute(instruction);
+    }
+
+    public void instructionExecute(Instruction instruction) throws Exception {
         instruction.execute();
     }
 
+    public void jumpTo(int index) {
+        pc = index;
+    }
+
     public static void main(String[] args) throws Exception {
-        Simulator sm = new Simulator();
-        sm.run();
+        simulator.run();
         Register.getRegister().writeRegister("$s0", 2);
         Register.getRegister().writeRegister("$s1", 2);
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        sm.fetchNextInstruction();
-        Register.getRegister().printRegisters();
+        simulator.instructionFetch();
+        simulator.instructionFetch();
+        simulator.instructionFetch();
+        simulator.instructionFetch();
+        Label.getLabelInstance().printLabelInstance();
+        System.out.println(simulator.getPc());
+//        Register.getRegister().printRegisters();
     }
 }

@@ -1,6 +1,9 @@
 package component;
 
+import exceptions.InvalidOperationException;
+
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mohamed on 5/24/14.
@@ -20,11 +23,17 @@ public class Label {
     }
 
 
-    public void addLabel(String label, int value) {
+    public void addLabel(String label, int value) throws InvalidOperationException {
         labels.put(label, value);
     }
 
     public int getLabelAddress(String label) {
         return labels.get(label);
+    }
+
+    public void printLabelInstance() {
+        for (Map.Entry<String, Integer> entry : labels.entrySet()) {
+            System.out.println(entry.getKey() + "=> " + entry.getValue());
+        }
     }
 }

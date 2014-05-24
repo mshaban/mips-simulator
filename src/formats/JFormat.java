@@ -7,11 +7,16 @@ package formats;
  */
 public abstract class JFormat extends Instruction {
 
-    String label;
+    private String label;
 
     public JFormat(String label) throws Exception {
         this.label = label;
     }
 
-    public abstract void execute();
+
+    public String getLabel() {
+        return label;
+    }
+
+    public abstract void execute() throws Exception;
 }

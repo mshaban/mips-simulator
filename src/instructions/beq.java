@@ -1,6 +1,9 @@
 package instructions;
 
+import component.Label;
+import component.Register;
 import formats.IFormat;
+import simulator.Simulator;
 
 /**
  * Created by mohamed on 5/22/14.
@@ -13,8 +16,17 @@ public class beq extends IFormat {
         super(rs, rt, constant);
     }
 
-    @Override
-    public void execute() {
+    public beq(String rs, String rt, String rd) throws Exception {
+        super(rs, rt, rd);
+    }
 
+    @Override
+    public void execute() throws Exception {
+        int v1 = Register.getRegister().readRegister(getRs());
+        int v2 = Register.getRegister().readRegister(getRt());
+        if (v1 == v2) {
+            int address = Label.getLabelInstance().getLabelAddress(getRd());
+            Simulator.getSimulator().jumpTo(address);
+        }
     }
 }

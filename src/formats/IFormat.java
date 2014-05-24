@@ -10,7 +10,7 @@ import exceptions.OutOfRangeException;
  */
 public abstract class IFormat extends Instruction {
 
-    private String rs, rt;
+    private String rs, rt, rd;
     private int constant;
 
     public IFormat(String rs, String rt, int constant) throws Exception {
@@ -29,6 +29,18 @@ public abstract class IFormat extends Instruction {
         this.rs = rs;
         this.rt = rt;
         this.constant = 0;
+    }
+
+    public IFormat(String rs, String rt, String rd) throws Exception {
+        if (!rs.startsWith("$") || !rt.startsWith("$"))
+            throw new InvalidArgumentException();
+        this.rs = rs;
+        this.rt = rt;
+        this.rd = rd;
+    }
+
+    public String getRd() {
+        return rd;
     }
 
     public String getRs() {

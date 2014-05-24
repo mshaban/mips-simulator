@@ -1,6 +1,9 @@
 package instructions;
 
+import component.Label;
+import component.Register;
 import formats.JFormat;
+import simulator.Simulator;
 
 /**
  * Created by mohamed on 5/22/14.
@@ -15,7 +18,9 @@ public class jal extends JFormat {
     }
 
     @Override
-    public void execute() {
-
+    public void execute() throws Exception {
+        int address = Label.getLabelInstance().getLabelAddress(getLabel());
+        Register.getRegister().writeRegister("$ra", Simulator.getSimulator().getPc());
+        Simulator.getSimulator().jumpTo(address);
     }
 }

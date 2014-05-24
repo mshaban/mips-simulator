@@ -71,10 +71,9 @@ public class Register {
         return registers.get(registerName);
     }
 
-    public static void printRegisters() {
-        Register reg = Register.getRegister();
+    public void printRegisters() {
 
-        for (Map.Entry<String, Integer> ent : reg.getRegisters().entrySet())
+        for (Map.Entry<String, Integer> ent : getRegisters().entrySet())
             System.out.println(ent.getKey() + "=>" + ent.getValue());
     }
 

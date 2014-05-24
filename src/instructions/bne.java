@@ -12,6 +12,10 @@ public class bne extends IFormat {
         super(rs, rt, constant);
     }
 
+    public bne(String rs, String rt, String rd) throws Exception {
+        super(rs, rt, rd);
+    }
+
     @Override
     public void execute() {
 

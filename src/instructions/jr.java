@@ -1,6 +1,8 @@
 package instructions;
 
+import component.Register;
 import formats.JFormat;
+import simulator.Simulator;
 
 /**
  * Created by mohamed on 5/22/14.
@@ -15,7 +17,8 @@ public class jr extends JFormat {
     }
 
     @Override
-    public void execute() {
-
+    public void execute() throws Exception {
+        int address = Register.getRegister().readRegister(getLabel());
+        Simulator.getSimulator().jumpTo(address);
     }
 }

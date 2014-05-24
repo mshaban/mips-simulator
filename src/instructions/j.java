@@ -1,6 +1,8 @@
 package instructions;
 
+import component.Label;
 import formats.JFormat;
+import simulator.Simulator;
 
 /**
  * Created by mohamed on 5/22/14.
@@ -16,6 +18,7 @@ public class j extends JFormat {
 
     @Override
     public void execute() {
-
+        int address = Label.getLabelInstance().getLabelAddress(getLabel());
+        Simulator.getSimulator().jumpTo(address);
     }
 }

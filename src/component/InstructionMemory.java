@@ -27,7 +27,6 @@ public class InstructionMemory {
     public String getInsruction(int pc) throws Exception {
         if (pc > instructions.size())
             throw new OutOfRangeException();
-        System.out.println(pc + " " + instructions.size());
         return instructions.get(pc);
     }
 
