@@ -3,10 +3,7 @@ package Simulator;
 import component.DataMemory;
 import component.Register;
 import formats.Instruction;
-import instructions.add;
-import instructions.addi;
-import instructions.and;
-import instructions.andi;
+import instructions.*;
 
 import java.util.ArrayList;
 
@@ -123,7 +120,41 @@ public class Simulator {
                 instruction = new andi(rs,rt,Integer.parseInt(array[3].trim()));
                 break;
 
+            case "lw":
+                instruction = new lw(rs,rt);
+                break;
 
+            case"nor":
+                instruction = new nor(rs,rt,array[3].trim());
+                break;
+
+            case"or":
+                instruction = new or(rs,rt,array[3].trim());
+                break;
+
+            case"ori":
+                instruction = new ori(rs,rt,Integer.parseInt(array[3].trim());
+                break;
+
+            case"sll":
+                instruction = new sll(rs,rt, array[3].trim());
+                break;
+
+            case"slt":
+                instruction = new slt(rs,rt,array[3].trim());
+                break;
+
+            case"srl":
+                instruction = new srl(rs,rt,array[3].trim());
+                break;
+
+            case"sub":
+                instruction = new sub(rs,rt,array[3].trim());
+                break;
+
+            case"sw":
+                instruction = new sw(rs,rt,0);
+                break;
         }
 
 
