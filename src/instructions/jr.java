@@ -21,4 +21,9 @@ public class jr extends JFormat {
         int address = Register.getRegister().readRegister(getLabel());
         Simulator.getSimulator().jumpTo(address);
     }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+
+    }
 }

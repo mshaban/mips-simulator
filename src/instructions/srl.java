@@ -19,7 +19,12 @@ public class srl extends RFormat {
         int r1 = Register.getRegister().readRegister(this.getRt());
         int shamt = Integer.parseInt(this.getRd());
         int result = r1 >> shamt;
-        Register.getRegister().writeRegister(getRs(), result);
+        writeBack(getRs(), result);
 
+    }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+        Register.getRegister().writeRegister(getRs(), result);
     }
 }

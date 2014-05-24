@@ -17,6 +17,11 @@ public class andi extends IFormat {
         int v1 = Register.getRegister().readRegister(getRt());
         int v2 = getConstant();
         int result = ALU.executeInstruction("and", v1, v2);
+        writeBack(getRs(), result);
+    }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
         Register.getRegister().writeRegister(getRs(), result);
     }
 }

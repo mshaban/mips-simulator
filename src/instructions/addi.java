@@ -20,7 +20,11 @@ public class addi extends IFormat {
         int v1 = Register.getRegister().readRegister(getRt());
         int v2 = getConstant();
         int sum = ALU.executeInstruction("add", v1, v2);
+        writeBack(getRs(), sum);
+    }
 
-        Register.getRegister().writeRegister(getRs(), sum);
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+        Register.getRegister().writeRegister(getRs(), result);
     }
 }

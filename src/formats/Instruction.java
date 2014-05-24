@@ -8,4 +8,6 @@ package formats;
 public abstract class Instruction {
 
     public abstract void execute() throws Exception;
+
+    public abstract void writeBack(String rs, int result) throws Exception;
 }

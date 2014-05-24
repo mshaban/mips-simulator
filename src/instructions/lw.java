@@ -25,7 +25,12 @@ public class lw extends IFormat {
         int core = Integer.parseInt(getRt().substring(getRt().indexOf('('), getRt().indexOf(')')));
         core *= 4;
         int value = DataMemory.getDataMemory().read(offset + core, offset + core)[0];
-        Register.getRegister().writeRegister(getRs(), value);
+        writeBack(getRs(), value);
 
+    }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+        Register.getRegister().writeRegister(getRs(), result);
     }
 }

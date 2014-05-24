@@ -20,6 +20,11 @@ public class or extends RFormat {
         int r1 = Register.getRegister().readRegister(this.getRt());
         int r2 = Register.getRegister().readRegister(this.getRd());
         int result = ALU.executeInstruction("or", r1, r2);
+        writeBack(getRs(), result);
+    }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
         Register.getRegister().writeRegister(getRs(), result);
     }
 }

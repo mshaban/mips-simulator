@@ -148,7 +148,8 @@ public class Simulator {
     }
 
     public void instructionExecute(Instruction instruction) throws Exception {
-        instruction.execute();
+        if (!(instruction instanceof sw || instruction instanceof lw))
+            instruction.execute();
     }
 
     public void jumpTo(int index) {

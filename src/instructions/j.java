@@ -21,4 +21,9 @@ public class j extends JFormat {
         int address = Label.getLabelInstance().getLabelAddress(getLabel());
         Simulator.getSimulator().jumpTo(address);
     }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+
+    }
 }

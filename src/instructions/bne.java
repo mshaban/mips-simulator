@@ -20,4 +20,9 @@ public class bne extends IFormat {
     public void execute() {
 
     }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+
+    }
 }

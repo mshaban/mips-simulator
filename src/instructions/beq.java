@@ -29,4 +29,9 @@ public class beq extends IFormat {
             Simulator.getSimulator().jumpTo(address);
         }
     }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+        
+    }
 }

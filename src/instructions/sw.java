@@ -29,4 +29,9 @@ public class sw extends IFormat {
         DataMemory.getDataMemory().write(dataArray, core + offset);
 
     }
+
+    @Override
+    public void writeBack(String rs, int result) throws Exception {
+        
+    }
 }
