@@ -11,6 +11,8 @@ import instructions.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import static component.InstructionMemory.getInstructionSet;
+
 /**
  * Created by EslaMaged on 5/23/14.
  * package simulator
@@ -20,6 +22,11 @@ public class Simulator {
 
     private int pc;
     private static Simulator simulator = new Simulator();
+    int clkCycle;
+    String toDecode;
+    Instruction toExecute;
+    Instruction toWriteBack;
+    int toFetch;
 
     private Simulator() {
         gassanMattar();
@@ -43,7 +50,7 @@ public class Simulator {
                 if (line.trim().endsWith(":")) {
                     Label.getLabelInstance().addLabel(line.substring(0, line.length() - 1), counter);
                 } else {
-                    InstructionMemory.getInstructionSet().addInstruction(line);
+                    getInstructionSet().addInstruction(line);
                     counter++;
                 }
             }
@@ -54,7 +61,7 @@ public class Simulator {
 
     public void resetSimulator() {
         pc = 0;
-        InstructionMemory.getInstructionSet().reset();
+        getInstructionSet().reset();
         DataMemory.getDataMemory().reset();
         Register.getRegister().reset();
     }
@@ -69,103 +76,138 @@ public class Simulator {
     }
 
     public void instructionFetch() throws Exception {
-        int old = pc;
-        instructionDecode();
-        pc += old == pc ? 1 : 0;
+        if (toFetch < InstructionMemory.getInstructionSet().getInstructions().size())
+            toDecode = getInstructionSet().getInsruction(toFetch);
+        toFetch++;
     }
+
 
     public void instructionDecode() throws Exception {
         //instruction decode
-        String s = InstructionMemory.getInstructionSet().getInsruction(pc);
-        Instruction instruction;
+        String s = toDecode;
         String[] array = s.split(" ");
         String operation = array[0].trim();
         String rs = "";
         String rt = "";
         if (array.length > 2) {
-            rs = array[1].trim().substring(0, array[1].length() - 1);
-            rt = array[2].trim().substring(0, array[2].length() - 1);
+            rs = array[1].trim().substring(0, array[1].length());
+            rt = array[2].trim().substring(0, array[2].length());
+            rs = rs.replaceAll(",", "");
+            rt = rt.replaceAll(",", "");
         }
         switch (operation) {
             case "add":
-                instruction = new add(rs, rt, array[3].trim());
+                toExecute = new add(rs, rt, array[3].trim());
                 break;
             case "addi":
-                instruction = new addi(rs, rt, Integer.parseInt(array[3].trim()));
+                toExecute = new addi(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
             case "and":
-                instruction = new and(rs, rt, array[3].trim());
+                toExecute = new and(rs, rt, array[3].trim());
                 break;
             case "andi":
-                instruction = new andi(rs, rt, Integer.parseInt(array[3].trim()));
+                toExecute = new andi(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
             case "lw":
-                instruction = new lw(rs, rt, 0);
+                toExecute = new lw(rs, rt, 0);
                 break;
             case "nor":
-                instruction = new nor(rs, rt, array[3].trim());
+                toExecute = new nor(rs, rt, array[3].trim());
                 break;
             case "or":
-                instruction = new or(rs, rt, array[3].trim());
+                toExecute = new or(rs, rt, array[3].trim());
                 break;
             case "ori":
-                instruction = new ori(rs, rt, Integer.parseInt(array[3].trim()));
+                toExecute = new ori(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
             case "sll":
-                instruction = new sll(rs, rt, array[3].trim());
+                toExecute = new sll(rs, rt, array[3].trim());
                 break;
             case "slt":
-                instruction = new slt(rs, rt, array[3].trim());
+                toExecute = new slt(rs, rt, array[3].trim());
                 break;
             case "srl":
-                instruction = new srl(rs, rt, array[3].trim());
+                toExecute = new srl(rs, rt, array[3].trim());
                 break;
             case "sub":
-                instruction = new sub(rs, rt, array[3].trim());
+                toExecute = new sub(rs, rt, array[3].trim());
                 break;
             case "sw":
-                instruction = new sw(rs, rt, 0);
+                toExecute = new sw(rs, rt);
                 break;
             case "beq":
-                instruction = new beq(rs, rt, array[3].trim());
+                toExecute = new beq(rs, rt, array[3].trim());
                 break;
             case "bne":
-                instruction = new bne(rs, rt, array[3].trim());
+                toExecute = new bne(rs, rt, array[3].trim());
                 break;
             case "j":
-                instruction = new j(s.split(" ")[1]);
+                toExecute = new j(s.split(" ")[1]);
                 break;
             case "jal":
-                instruction = new jal(s.split(" ")[1]);
+                toExecute = new jal(s.split(" ")[1]);
                 break;
             case "jr":
-                instruction = new jr(s.split(" ")[1]);
+                toExecute = new jr(s.split(" ")[1]);
                 break;
             default:
                 throw new InvalidOperationException();
         }
-        instructionExecute(instruction);
     }
 
-    public void instructionExecute(Instruction instruction) throws Exception {
-        if (!(instruction instanceof sw || instruction instanceof lw))
-            instruction.execute();
+    public void instructionExecute() throws Exception {
+        if (!(toExecute instanceof sw || toExecute instanceof lw))
+            toExecute.execute();
+        else {
+            toWriteBack = toExecute;
+        }
+        pc++;
+    }
+
+    public void accessMemory() throws Exception {
+        if (toWriteBack instanceof sw || toWriteBack instanceof lw) {
+            toWriteBack.execute();
+        }
     }
 
     public void jumpTo(int index) {
         pc = index;
+        toDecode = null;
+        toFetch = pc;
+        toExecute = null;
+    }
+
+    public void nextStep() throws Exception {
+        if (toExecute != null) {
+            instructionExecute();
+            toExecute = null;
+        }
+        if (toDecode != null) {
+            instructionDecode();
+            toDecode = null;
+        }
+
+        if (toWriteBack != null) {
+            accessMemory();
+            toWriteBack = null;
+        }
+        if (toFetch < InstructionMemory.getInstructionSet().getInstructions().size())
+            instructionFetch();
+    }
+
+
+    public void runProgram() throws Exception {
+        clkCycle = 0;
+        while (toExecute != null || toDecode != null || clkCycle == 0 || toWriteBack != null) {
+            nextStep();
+            clkCycle++;
+        }
     }
 
     public static void main(String[] args) throws Exception {
         simulator.run();
-        Register.getRegister().writeRegister("$s0", 2);
-        Register.getRegister().writeRegister("$s1", 2);
-        simulator.instructionFetch();
-        simulator.instructionFetch();
-        simulator.instructionFetch();
-        simulator.instructionFetch();
-        Label.getLabelInstance().printLabelInstance();
-        System.out.println(simulator.getPc());
-//        Register.getRegister().printRegisters();
+        simulator.runProgram();
+        DataMemory.getDataMemory().printDataMemory();
     }
+
 }

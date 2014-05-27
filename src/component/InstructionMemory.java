@@ -30,6 +30,10 @@ public class InstructionMemory {
         return instructions.get(pc);
     }
 
+    public ArrayList<String> getInstructions() {
+        return instructions;
+    }
+
     public void reset() {
         instructions = new ArrayList<>();
     }

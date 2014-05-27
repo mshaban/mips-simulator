@@ -30,7 +30,7 @@ public class DataMemory {
      * @author: EslaMaged
      */
     public DataMemory() {
-        memory = new int[1 << 5];
+        memory = new int[1 << 8];
     }
 
     /**
@@ -117,7 +117,7 @@ public class DataMemory {
     }
 
     public void reset() {
-        memory = new int[1 << 5];
+        memory = new int[1 << 7];
     }
 
     public void printDataMemory() {

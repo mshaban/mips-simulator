@@ -20,7 +20,7 @@ public class jal extends JFormat {
     @Override
     public void execute() throws Exception {
         int address = Label.getLabelInstance().getLabelAddress(getLabel());
-        writeBack("$ra", Simulator.getSimulator().getPc());
+        writeBack("$ra", Simulator.getSimulator().getPc() + 1);
         Simulator.getSimulator().jumpTo(address);
     }
 

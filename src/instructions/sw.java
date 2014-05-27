@@ -11,9 +11,6 @@ import formats.IFormat;
  */
 public class sw extends IFormat {
 
-    public sw(String rs, String rt, int constant) throws Exception {
-        super(rs, rt, constant);
-    }
 
     public sw(String rs, String rt) throws Exception {
         super(rs, rt);
@@ -22,16 +19,14 @@ public class sw extends IFormat {
     @Override
     public void execute() throws Exception {
         int offset = Integer.parseInt(getRt().split("\\(")[0]);
-        int core = Integer.parseInt(getRt().substring(getRt().indexOf('('), getRt().indexOf(')')));
+        int core = Register.getRegister().readRegister(getRt().substring(getRt().indexOf('(') + 1, getRt().indexOf(')')));
         core *= 4;
-
-        int[] dataArray = {Register.getRegister().readRegister(getRs())};
-        DataMemory.getDataMemory().write(dataArray, core + offset);
-
+        writeBack(getRs(), core + offset);
     }
 
     @Override
     public void writeBack(String rs, int result) throws Exception {
-        
+        int[] dataArray = {Register.getRegister().readRegister(getRs())};
+        DataMemory.getDataMemory().write(dataArray, result);
     }
 }
