@@ -31,6 +31,10 @@ public class mipsGUI extends JFrame implements ActionListener, DocumentListener 
     private JTextField toFetch;
     private JTextField toExecute;
     private JTextField clkCycle;
+    private JLabel toFetchLabel;
+    private JLabel toDecodeLabel;
+    private JLabel toExecuteLabel;
+    private JLabel clkCycleLabel;
 
     public mipsGUI() {
         super("mips simulator");

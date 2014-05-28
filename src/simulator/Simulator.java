@@ -213,31 +213,33 @@ public class Simulator {
     }
 
     public boolean nextStep() throws Exception {
+        boolean toReturn;
+        if (toExecute != null || toDecode != null || toWriteBack != null || clkCycle == 0 || toWriteMemory != null) {
+            clkCycle++;
+            toReturn = true;
+        } else
+            toReturn = false;
+        if (toWriteBack != null) {
+            writeBack();
+            toWriteBack = null;
+        }
+        if (toWriteMemory != null) {
+            accessMemory();
+            toWriteMemory = null;
+        }
+
         if (toExecute != null) {
             instructionExecute();
             toExecute = null;
         }
         if (toDecode != null) {
+
             instructionDecode();
             toDecode = null;
         }
-
-        if (toWriteMemory != null) {
-            accessMemory();
-            toWriteMemory = null;
-        }
-        if (toWriteBack != null) {
-            writeBack();
-            toWriteBack = null;
-        }
         if (toFetch < InstructionMemory.getInstructionSet().getInstructions().size())
             instructionFetch();
-        if (toExecute != null || toDecode != null || toWriteBack != null || clkCycle == 0 || toWriteMemory != null) {
-            clkCycle++;
-            return true;
-        } else
-            return false;
-
+        return toReturn;
     }
 
 
