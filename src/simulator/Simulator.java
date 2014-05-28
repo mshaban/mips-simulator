@@ -21,7 +21,6 @@ import static component.InstructionMemory.getInstructionSet;
  */
 public class Simulator {
 
-    private int pc;
     private static Simulator simulator = new Simulator();
     int clkCycle;
     String toDecode;
@@ -29,6 +28,19 @@ public class Simulator {
     Instruction toWriteMemory;
     Instruction toWriteBack;
     int toFetch;
+    private int pc;
+
+    private Simulator() {
+        gassanMattar();
+    }
+
+    public static Simulator getSimulator() {
+        return simulator;
+    }
+
+    public static void main(String[] args) throws Exception {
+        mipsGUI frame = new mipsGUI();
+    }
 
     public Instruction getToExecute() {
         return toExecute;
@@ -45,14 +57,6 @@ public class Simulator {
     public String getToDecode() {
 
         return toDecode;
-    }
-
-    private Simulator() {
-        gassanMattar();
-    }
-
-    public static Simulator getSimulator() {
-        return simulator;
     }
 
     public int getPc() {
@@ -112,7 +116,6 @@ public class Simulator {
         }
         toFetch++;
     }
-
 
     public void instructionDecode() throws Exception {
         //instruction decode
@@ -242,19 +245,11 @@ public class Simulator {
         return toReturn;
     }
 
-
     public void runProgram() throws Exception {
         clkCycle = 0;
         while (true) {
             if (!(nextStep())) break;
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-//        simulator.run();
-//        simulator.runProgram();
-//        DataMemory.getDataMemory().printDataMemory();
-        mipsGUI frame = new mipsGUI();
     }
 
 }

@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class InstructionMemory {
 
-    ArrayList<String> instructions;
     private static InstructionMemory instructionSet = new InstructionMemory();
+    ArrayList<String> instructions;
 
     public InstructionMemory() {
         instructions = new ArrayList<>();

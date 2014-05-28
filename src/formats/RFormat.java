@@ -11,23 +11,6 @@ import exceptions.OutOfRangeException;
 public abstract class RFormat extends Instruction {
 
     private String rs;
-
-    public String getRt() {
-        return rt;
-    }
-
-    public void setRt(String rt) {
-        this.rt = rt;
-    }
-
-    public String getRd() {
-        return rd;
-    }
-
-    public void setRd(String rd) {
-        this.rd = rd;
-    }
-
     private String rt;
     private String rd;
 
@@ -44,6 +27,22 @@ public abstract class RFormat extends Instruction {
             throw new InvalidArgumentException();
         this.rs = rs;
         this.rt = rt;
+        this.rd = rd;
+    }
+
+    public String getRt() {
+        return rt;
+    }
+
+    public void setRt(String rt) {
+        this.rt = rt;
+    }
+
+    public String getRd() {
+        return rd;
+    }
+
+    public void setRd(String rd) {
         this.rd = rd;
     }
 

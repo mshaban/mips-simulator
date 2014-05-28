@@ -11,17 +11,16 @@ import java.util.Map;
  * project mips-simulator
  */
 public class Label {
-    private HashMap<String, Integer> labels;
     private static Label labelInstance = new Label();
-
-    public static Label getLabelInstance() {
-        return labelInstance;
-    }
+    private HashMap<String, Integer> labels;
 
     private Label() {
         labels = new HashMap<>();
     }
 
+    public static Label getLabelInstance() {
+        return labelInstance;
+    }
 
     public void addLabel(String label, int value) throws InvalidOperationException {
         labels.put(label, value);

@@ -11,8 +11,8 @@ import java.util.Arrays;
 public class DataMemory {
 
 
-    private int[] memory;
     private static DataMemory dataMemory = new DataMemory();
+    private int[] memory;
 
     /**
      * The constructor of the Memory class
@@ -31,6 +31,10 @@ public class DataMemory {
      */
     public DataMemory() {
         memory = new int[1 << 8];
+    }
+
+    public static DataMemory getDataMemory() {
+        return dataMemory;
     }
 
     /**
@@ -104,16 +108,11 @@ public class DataMemory {
         return result;
     }
 
-
     @Override
     public String toString() {
         return "Memory{" +
                 "memory=" + Arrays.toString(memory) +
                 '}';
-    }
-
-    public static DataMemory getDataMemory() {
-        return dataMemory;
     }
 
     public void reset() {

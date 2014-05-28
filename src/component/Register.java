@@ -15,17 +15,21 @@ import java.util.Map;
  */
 public class Register {
 
-    private HashMap<String, Integer> registers;
     private static final String readOnlyRegister = "$zero";
     private static Register register = new Register();
-
-    public static void setRegister(Register register) {
-        Register.register = register;
-    }
+    private HashMap<String, Integer> registers;
 
     private Register() {
         registers = new HashMap<>();
         readFile();
+    }
+
+    public static Register getRegister() {
+        return register;
+    }
+
+    public static void setRegister(Register register) {
+        Register.register = register;
     }
 
     private void readFile() {
@@ -75,10 +79,6 @@ public class Register {
 
         for (Map.Entry<String, Integer> ent : getRegisters().entrySet())
             System.out.println(ent.getKey() + "=>" + ent.getValue());
-    }
-
-    public static Register getRegister() {
-        return register;
     }
 
     public void reset() {
