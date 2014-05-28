@@ -35,7 +35,7 @@ public class InstructionMemory {
     }
 
     public void reset() {
-        instructions = new ArrayList<>();
+        instructionSet = new InstructionMemory();
     }
 
     public void printInstructionMemory() {

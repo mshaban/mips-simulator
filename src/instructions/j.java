@@ -23,7 +23,7 @@ public class j extends JFormat {
     }
 
     @Override
-    public void writeBack(String rs, int result) throws Exception {
+    public void writeBack() throws Exception {
 
     }
 }

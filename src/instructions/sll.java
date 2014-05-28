@@ -17,12 +17,11 @@ public class sll extends RFormat {
     public void execute() throws Exception {
         int r1 = Register.getRegister().readRegister(this.getRt());
         int shamt = Integer.parseInt(this.getRd());
-        int result = r1 << shamt;
-        writeBack(getRs(), result);
+        result = r1 << shamt;
     }
 
     @Override
-    public void writeBack(String rs, int result) throws Exception {
+    public void writeBack() throws Exception {
         Register.getRegister().writeRegister(getRs(), result);
     }
 }

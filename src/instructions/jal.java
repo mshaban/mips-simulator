@@ -20,12 +20,12 @@ public class jal extends JFormat {
     @Override
     public void execute() throws Exception {
         int address = Label.getLabelInstance().getLabelAddress(getLabel());
-        writeBack("$ra", Simulator.getSimulator().getPc() + 1);
+        result = Simulator.getSimulator().getPc() + 1;
         Simulator.getSimulator().jumpTo(address);
     }
 
     @Override
-    public void writeBack(String rs, int result) throws Exception {
+    public void writeBack() throws Exception {
         Register.getRegister().writeRegister("$ra", result);
     }
 }

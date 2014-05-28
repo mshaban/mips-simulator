@@ -82,8 +82,7 @@ public class Register {
     }
 
     public void reset() {
-        registers = new HashMap<>();
-        readFile();
+        register = new Register();
     }
 
 }

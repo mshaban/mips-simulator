@@ -1,5 +1,6 @@
 package simulator;
 
+import GUI.mipsGUI;
 import component.DataMemory;
 import component.InstructionMemory;
 import component.Label;
@@ -25,8 +26,26 @@ public class Simulator {
     int clkCycle;
     String toDecode;
     Instruction toExecute;
+    Instruction toWriteMemory;
     Instruction toWriteBack;
     int toFetch;
+
+    public Instruction getToExecute() {
+        return toExecute;
+    }
+
+    public Instruction gettoWriteMemory() {
+        return toWriteMemory;
+    }
+
+    public int getToFetch() {
+        return toFetch;
+    }
+
+    public String getToDecode() {
+
+        return toDecode;
+    }
 
     private Simulator() {
         gassanMattar();
@@ -40,7 +59,7 @@ public class Simulator {
         return pc;
     }
 
-    private void readInstructions() {
+    public void readInstructions() {
         BufferedReader bf;
         try {
             bf = new BufferedReader(new FileReader("sample1.in"));
@@ -59,16 +78,28 @@ public class Simulator {
         }
     }
 
+    public int getClkCycle() {
+        return clkCycle;
+    }
+
+    public void readInstructionsFromString(String s) throws InvalidOperationException {
+        int counter = 0;
+        for (String line : s.split("\n")) {
+            if (line.trim().endsWith(":")) {
+                Label.getLabelInstance().addLabel(line.substring(0, line.length() - 1), counter);
+            } else {
+                getInstructionSet().addInstruction(line);
+                counter++;
+            }
+        }
+    }
+
     public void resetSimulator() {
         pc = 0;
         getInstructionSet().reset();
         DataMemory.getDataMemory().reset();
         Register.getRegister().reset();
-    }
-
-    public void run() {
-        resetSimulator();
-        readInstructions();
+        simulator = new Simulator();
     }
 
     private void gassanMattar() {
@@ -76,8 +107,9 @@ public class Simulator {
     }
 
     public void instructionFetch() throws Exception {
-        if (toFetch < InstructionMemory.getInstructionSet().getInstructions().size())
+        if (toFetch < InstructionMemory.getInstructionSet().getInstructions().size()) {
             toDecode = getInstructionSet().getInsruction(toFetch);
+        }
         toFetch++;
     }
 
@@ -109,7 +141,7 @@ public class Simulator {
                 toExecute = new andi(rs, rt, Integer.parseInt(array[3].trim()));
                 break;
             case "lw":
-                toExecute = new lw(rs, rt, 0);
+                toExecute = new lw(rs, rt);
                 break;
             case "nor":
                 toExecute = new nor(rs, rt, array[3].trim());
@@ -158,16 +190,19 @@ public class Simulator {
     public void instructionExecute() throws Exception {
         if (!(toExecute instanceof sw || toExecute instanceof lw))
             toExecute.execute();
-        else {
-            toWriteBack = toExecute;
-        }
+        toWriteMemory = toExecute;
         pc++;
     }
 
     public void accessMemory() throws Exception {
-        if (toWriteBack instanceof sw || toWriteBack instanceof lw) {
-            toWriteBack.execute();
+        if (toWriteMemory instanceof sw || toWriteMemory instanceof lw) {
+            toWriteMemory.execute();
         }
+        toWriteBack = toWriteMemory;
+    }
+
+    public void writeBack() throws Exception {
+        toWriteBack.writeBack();
     }
 
     public void jumpTo(int index) {
@@ -177,7 +212,7 @@ public class Simulator {
         toExecute = null;
     }
 
-    public void nextStep() throws Exception {
+    public boolean nextStep() throws Exception {
         if (toExecute != null) {
             instructionExecute();
             toExecute = null;
@@ -187,27 +222,37 @@ public class Simulator {
             toDecode = null;
         }
 
-        if (toWriteBack != null) {
+        if (toWriteMemory != null) {
             accessMemory();
+            toWriteMemory = null;
+        }
+        if (toWriteBack != null) {
+            writeBack();
             toWriteBack = null;
         }
         if (toFetch < InstructionMemory.getInstructionSet().getInstructions().size())
             instructionFetch();
+        if (toExecute != null || toDecode != null || toWriteBack != null || clkCycle == 0 || toWriteMemory != null) {
+            clkCycle++;
+            return true;
+        } else
+            return false;
+
     }
 
 
     public void runProgram() throws Exception {
         clkCycle = 0;
-        while (toExecute != null || toDecode != null || clkCycle == 0 || toWriteBack != null) {
-            nextStep();
-            clkCycle++;
+        while (true) {
+            if (!(nextStep())) break;
         }
     }
 
     public static void main(String[] args) throws Exception {
-        simulator.run();
-        simulator.runProgram();
-        DataMemory.getDataMemory().printDataMemory();
+//        simulator.run();
+//        simulator.runProgram();
+//        DataMemory.getDataMemory().printDataMemory();
+        mipsGUI frame = new mipsGUI();
     }
 
 }

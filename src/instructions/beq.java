@@ -31,7 +31,7 @@ public class beq extends IFormat {
     }
 
     @Override
-    public void writeBack(String rs, int result) throws Exception {
-        
+    public void writeBack() throws Exception {
+
     }
 }

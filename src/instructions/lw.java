@@ -22,15 +22,13 @@ public class lw extends IFormat {
     @Override
     public void execute() throws Exception {
         int offset = Integer.parseInt(getRt().split("\\(")[0]);
-        int core = Integer.parseInt(getRt().substring(getRt().indexOf('('), getRt().indexOf(')')));
+        int core = Register.getRegister().readRegister(getRt().substring(getRt().indexOf('(') + 1, getRt().indexOf(')')));
         core *= 4;
-        int value = DataMemory.getDataMemory().read(offset + core, offset + core)[0];
-        writeBack(getRs(), value);
-
+        result = DataMemory.getDataMemory().read(offset + core, offset + core + 1)[0];
     }
 
     @Override
-    public void writeBack(String rs, int result) throws Exception {
+    public void writeBack() throws Exception {
         Register.getRegister().writeRegister(getRs(), result);
     }
 }

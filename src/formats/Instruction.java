@@ -7,7 +7,9 @@ package formats;
  */
 public abstract class Instruction {
 
+    protected int result;
+
     public abstract void execute() throws Exception;
 
-    public abstract void writeBack(String rs, int result) throws Exception;
+    public abstract void writeBack() throws Exception;
 }

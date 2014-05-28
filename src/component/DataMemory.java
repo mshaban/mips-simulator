@@ -90,7 +90,7 @@ public class DataMemory {
      */
 
     public int[] read(int startIndex, int endIndex) throws WrongIndiciesException, MemoryOutOfBoundsException {
-        if (startIndex < endIndex) {
+        if (startIndex > endIndex) {
             throw new WrongIndiciesException();
         } else if (startIndex < 0 || endIndex > this.getSize()) {
             throw new MemoryOutOfBoundsException();
@@ -117,7 +117,7 @@ public class DataMemory {
     }
 
     public void reset() {
-        memory = new int[1 << 7];
+        dataMemory = new DataMemory();
     }
 
     public void printDataMemory() {

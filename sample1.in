@@ -1,9 +1,4 @@
+addi $s1, $s1, 2
+addi $s0, $s0, 5
 add $s2, $s0, $s1
-addi $s2, $s0, 10
-and $s2, $s0, $s1
-andi $s2, $s0, 0
-ori $s2, $s0, 10
-slt $s2, $s1, $s2
-sll $s2, $s2, 2
-srl $s2, $s2, 1
-sub $s2, $s2, $s2
+sw $s2, 0($s2)

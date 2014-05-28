@@ -1,5 +1,7 @@
 package instructions;
 
+import component.ALU;
+import component.Register;
 import exceptions.InvalidArgumentException;
 import formats.RFormat;
 
@@ -14,12 +16,14 @@ public class sltu extends RFormat {
     }
 
     @Override
-    public void execute() {
-
+    public void execute() throws Exception {
+        int r1 = Register.getRegister().readRegister(this.getRt());
+        int r2 = Register.getRegister().readRegister(this.getRd());
+        result = ALU.executeInstruction("slt", r1, r2);
     }
 
     @Override
-    public void writeBack(String rs, int result) throws Exception {
+    public void writeBack() throws Exception {
 
     }
 }

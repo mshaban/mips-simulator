@@ -19,12 +19,11 @@ public class add extends RFormat {
 
         int r1 = Register.getRegister().readRegister(this.getRt());
         int r2 = Register.getRegister().readRegister(this.getRd());
-        int result = ALU.executeInstruction("add", r1, r2);
-        writeBack(getRs(), result);
+        result = ALU.executeInstruction("add", r1, r2);
     }
 
     @Override
-    public void writeBack(String rs, int result) throws Exception {
+    public void writeBack() throws Exception {
         Register.getRegister().writeRegister(getRs(), result);
     }
 }
