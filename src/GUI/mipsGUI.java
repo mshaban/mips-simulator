@@ -35,6 +35,10 @@ public class mipsGUI extends JFrame implements ActionListener, DocumentListener 
     private JLabel toDecodeLabel;
     private JLabel toExecuteLabel;
     private JLabel clkCycleLabel;
+    private JTextField memory;
+    private JTextField writeBack;
+    private JLabel memoryLabel;
+    private JLabel writeBackLabel;
 
     public mipsGUI() {
         super("mips simulator");
@@ -51,6 +55,8 @@ public class mipsGUI extends JFrame implements ActionListener, DocumentListener 
         toExecute.setEditable(false);
         toFetch.setEditable(false);
         clkCycle.setEditable(false);
+        memory.setEditable(false);
+        writeBack.setEditable(false);
         setVisible(true);
     }
 
@@ -106,6 +112,15 @@ public class mipsGUI extends JFrame implements ActionListener, DocumentListener 
             toExecute.setText(Simulator.getSimulator().getToExecute().toString());
         else
             toExecute.setText("None");
+        if (Simulator.getSimulator().getToWriteMemory() != null)
+            memory.setText(Simulator.getSimulator().getToWriteMemory().toString());
+        else
+            memory.setText("None");
+
+        if (Simulator.getSimulator().getToWriteBack() != null) {
+            writeBack.setText(Simulator.getSimulator().getToWriteBack().toString());
+        } else
+            writeBack.setText("None");
         try {
             if (Simulator.getSimulator().getToFetch() < InstructionMemory.getInstructionSet().getInstructions().size())
                 toFetch.setText(InstructionMemory.getInstructionSet().getInsruction(Simulator.getSimulator().getToFetch()));

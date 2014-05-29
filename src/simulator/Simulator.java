@@ -42,12 +42,17 @@ public class Simulator {
         mipsGUI frame = new mipsGUI();
     }
 
-    public Instruction getToExecute() {
-        return toExecute;
+    public Instruction getToWriteBack() {
+        return toWriteBack;
     }
 
-    public Instruction gettoWriteMemory() {
+    public Instruction getToWriteMemory() {
+
         return toWriteMemory;
+    }
+
+    public Instruction getToExecute() {
+        return toExecute;
     }
 
     public int getToFetch() {
